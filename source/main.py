@@ -20,3 +20,14 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 """
+
+from source.objects.config_parser import ConfigParser
+import botogram
+
+config = ConfigParser("data/configs/config.json")
+bot = botogram.create(config.telegram.TELEGRAM_BOT_TOKEN)
+
+
+@bot.command("start")
+def start_command_handler(chat, message):
+    chat.send(str(config.redis.IP))
