@@ -65,4 +65,3 @@ class ConfigParser:
             self.telegram = _TelegramConfig(config_json)        # Parse it
         except KeyError:
             print("[-] Telegram Config not found")              # Alert if not found
-
