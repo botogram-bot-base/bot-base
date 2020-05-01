@@ -52,3 +52,5 @@ class User:
         """Function which simplifies the redis hset function"""
         return r.hset(self.redis_hash, key, value)
 
+    def state(self, new_state: str):
+        pass
