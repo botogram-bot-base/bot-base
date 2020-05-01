@@ -1,9 +1,11 @@
-{"telegram": {
-  "bot-token": ""
-},
-"redis": {
-  "ip": "localhost",
-  "port": 6379,
-  "database": 0,
-  "password": null
-}}
+{
+  "telegram": {
+    "bot-token": ""
+  },
+  "redis": {
+    "ip": "localhost",
+    "port": 6379,
+    "database": 0,
+    "password": null
+  }
+}
