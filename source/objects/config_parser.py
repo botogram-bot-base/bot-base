@@ -95,6 +95,7 @@ class ConfigParser:
         config_path : str
             The path to the config file
         """
+        
         with open(config_path) as config_file:                  # Open the config file
             config_json = json.load(config_file)                # Parse it to nested dictionaries
 
