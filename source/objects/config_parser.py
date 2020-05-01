@@ -1,6 +1,7 @@
 """MIT License
 
-Copyright (c) 2020 Francesco Zimbolo A.K.A. Haloghen & Matteo Bocci A.K.A. matteob99
+Copyright (c) 2020 Francesco Zimbolo A.K.A. Haloghen & Matteo Bocci A.K.A.
+matteob99
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -25,7 +26,8 @@ import json
 
 
 class _TelegramConfig:
-    """Class which represents the configuration needed for the telegram bot to work
+    """Class which represents the configuration needed for the
+    telegram bot to work.
     It contains the bot token and other stuff
 
     Attributes
@@ -48,11 +50,13 @@ class _TelegramConfig:
             If the telegram entry in the config file is not present
         """
 
-        self.TELEGRAM_BOT_TOKEN = config_json["telegram"]["bot-token"]     # Save the telegram bot token as an attribute
+        self.TELEGRAM_BOT_TOKEN = config_json["telegram"]["bot-token"]
+        # Save the telegram bot token as an attribute
 
 
 class _RedisConfig:
-    """Class which represents the configuration needed for redis to successfully connect and work
+    """Class which represents the configuration needed for redis to
+    successfully connect and work.
     It contains the redis IP, port, database and password
 
     Attributes
@@ -81,16 +85,17 @@ class _RedisConfig:
             If the redis entry in the config file is not present
         """
 
-        redis_config = config_json["redis"]                     # Get the redis config
+        redis_config = config_json["redis"]       # Get the redis config
 
-        self.IP = redis_config["ip"]                            # Parse the ip as an attribute
-        self.PORT = redis_config["port"]                        # Parse the port
-        self.DATABASE = redis_config["database"]                # Parse the database
-        self.PASSWORD = redis_config["password"]                # Parse the password
+        self.IP = redis_config["ip"]             # Parse the ip as an attribute
+        self.PORT = redis_config["port"]          # Parse the port
+        self.DATABASE = redis_config["database"]  # Parse the database
+        self.PASSWORD = redis_config["password"]  # Parse the password
 
 
 class ConfigParser:
-    """Class which parses the config file and gives a nice and parsed, ready to use config
+    """Class which parses the config file and gives a nice and parsed,
+    ready to use config
 
     Attributes
     ----------
@@ -101,22 +106,24 @@ class ConfigParser:
     """
 
     def __init__(self, config_path: str):
-        """Opens the config file, parses it as nested dictionaries and gets the relevant infos from it
+        """Opens the config file, parses it as nested dictionaries and gets
+        the relevant infos from it
 
         Parameters
         ----------
         config_path : str
             The path to the config file
         """
-        with open(config_path) as config_file:                  # Open the config file
-            config_json = json.load(config_file)                # Parse it to nested dictionaries
+        with open(config_path) as config_file:           # Open the config file
+            config_json = json.load(config_file)
+            # Parse it to nested dictionaries
 
         try:
-            self.redis = _RedisConfig(config_json)              # Parse it
+            self.redis = _RedisConfig(config_json)       # Parse it
         except KeyError:
-            print("[-] Redis Config not found")                 # Alert if not found
+            print("[-] Redis Config not found")          # Alert if not found
 
         try:
-            self.telegram = _TelegramConfig(config_json)        # Parse it
+            self.telegram = _TelegramConfig(config_json)  # Parse it
         except KeyError:
-            print("[-] Telegram Config not found")              # Alert if not found
+            print("[-] Telegram Config not found")       # Alert if not found
