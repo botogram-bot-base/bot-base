@@ -21,3 +21,10 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 """
+
+from invoke import task
+
+
+@task
+def lint(c):
+    c.run("flake8 --disable-noqa --max-complexity=10 --count --statistics")
