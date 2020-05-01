@@ -1,0 +1,10 @@
+version: '3.4'
+x-default: &default
+  restart: on-failure
+
+services:
+  bot-telegram:
+    <<: *default
+    build:
+      context: .
+      dockerfile: Dockerfile

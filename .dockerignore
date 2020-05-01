@@ -128,7 +128,13 @@ dmypy.json
 # Pyre type checker
 .pyre/
 .idea/
-
-#ignore config file
-config.env
-data/configs/config.json
+data/configs/confing.json.example
+*.yml
+.gitignore
+.dockerignore
+Dockerfile
+docker-compose*
+LICENSE
+AUTHORS
+*.md
+*.env

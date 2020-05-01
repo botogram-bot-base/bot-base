@@ -1,0 +1,22 @@
+version: '3.4'
+x-default: &default
+  restart: always
+  env_file:
+    - config.env
+
+services:
+  bot-telegram:
+    <<: *default
+    image:  matteob99/botbase
+    depends_on:
+      - redis
+  redis:
+    <<: *default
+    image: redis:6.0.0-alpine
+    command: ["redis-server", "--appendonly", "yes"]
+    volumes:
+      - redis-data:/data
+
+
+volumes:
+  redis-data:
