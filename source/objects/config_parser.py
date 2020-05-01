@@ -54,15 +54,15 @@ class ConfigParser:
 
         try:
             a = config_json["redis"]                            # Check if the redis config is present
+            del a
             self.redis = _RedisConfig(config_json)              # Parse it
         except KeyError:
             print("[-] Redis Config not found")                 # Alert if not found
 
         try:
             a = config_json["telegram"]                         # Check if the telegram config is present
+            del a
             self.telegram = _TelegramConfig(config_json)        # Parse it
         except KeyError:
             print("[-] Telegram Config not found")              # Alert if not found
-
-
 
