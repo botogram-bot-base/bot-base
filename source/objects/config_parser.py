@@ -25,15 +25,46 @@ import json
 
 class _TelegramConfig:
     """Class which represents the configuration needed for the telegram bot to work
-    It contains the bot token and other stuff"""
+    It contains the bot token and other stuff
+
+    Attributes
+    ----------
+    TELEGRAM_BOT_TOKEN : str
+        It represents the BOT Token on Telegram
+    """
+
     def __init__(self, config_json: dict):
+        """Get the bot token from the config json and save it as an attribute
+
+        Parameters
+        ----------
+        config_json : dict
+            The dictionary (json parsed) config file
+
+        Raises
+        ------
+        KeyError
+            If the telegram entry in the config file is not present
+        """
 
         self.TELEGRAM_BOT_TOKEN = config_json["telegram"]["bot-token"]     # Save the telegram bot token as an attribute
 
 
 class _RedisConfig:
     """Class which represents the configuration needed for redis to successfully connect and work
-    It contains the redis IP, port, database and password"""
+    It contains the redis IP, port, database and password
+
+    Attributes
+    ----------
+    IP : str
+        The IP where the redis db is located
+    PORT : int
+        The port used to connect
+    DATABASE : int
+        The database index used by the bot
+    PASSWORD : Union[str, None]
+        The password used to connect to the db, None if not present
+    """
 
     def __init__(self, config_json: dict):
 
@@ -46,22 +77,33 @@ class _RedisConfig:
 
 
 class ConfigParser:
-    """Class which parses the config file and gives a nice and parsed, ready to use config"""
+    """Class which parses the config file and gives a nice and parsed, ready to use config
+
+    Attributes
+    ----------
+    redis : _RedisConfig
+        It contains the redis configuration
+    telegram : _TelegramConfig
+        It contains the telegram bot configuration
+    """
 
     def __init__(self, config_path: str):
+        """Opens the config file, parses it as nested dictionaries and gets the relevant infos from it
+
+        Parameters
+        ----------
+        config_path : str
+            The path to the config file
+        """
         with open(config_path) as config_file:                  # Open the config file
             config_json = json.load(config_file)                # Parse it to nested dictionaries
 
         try:
-            a = config_json["redis"]                            # Check if the redis config is present
-            del a
             self.redis = _RedisConfig(config_json)              # Parse it
         except KeyError:
             print("[-] Redis Config not found")                 # Alert if not found
 
         try:
-            a = config_json["telegram"]                         # Check if the telegram config is present
-            del a
             self.telegram = _TelegramConfig(config_json)        # Parse it
         except KeyError:
             print("[-] Telegram Config not found")              # Alert if not found
