@@ -20,6 +20,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 """
+
 import json
 
 
@@ -67,6 +68,18 @@ class _RedisConfig:
     """
 
     def __init__(self, config_json: dict):
+        """Parses the redis related config into attributes
+
+        Parameters
+        ----------
+        config_json : dict
+            The dictionary (json parsed) config file
+
+        Raises
+        ------
+        KeyError
+            If the redis entry in the config file is not present
+        """
 
         redis_config = config_json["redis"]                     # Get the redis config
 
