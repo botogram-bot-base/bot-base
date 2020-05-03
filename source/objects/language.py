@@ -27,7 +27,8 @@ from source.objects.config_parser import ConfigParser
 # configuration parser to get telegram info
 
 from botogram import create, Buttons as BButtons
-# Get botogram for save username of the bot
+# Get botogram.create to save the username of the bot and
+# Get a botogram.Buttons class and save it as BButtons
 
 from typing import Union, List
 # Needed for parameters and return hints
@@ -35,54 +36,51 @@ from typing import Union, List
 
 config = ConfigParser("data/configs/config.json")
 bot = create(config.telegram.BOT_TOKEN)
+# todo new config
 bot_username = bot.itself.username
 del bot, create
 
 
 class _Category:
-    """Get the message text and buttons callbacks / url.
+    """prende il nome del tipo della categoria #todo eng.
 
     Attributes
     ----------
-    lang: str
+    lang : str
         The lang of the message text
-    status: str
-        The status of the message
 
-    json_lang: dict
+
+    json_lang : dict
         The json that contiens all message in the language
 
-    json_callback: dict
-        The json that contiens all callback function
-
+    category_name : str
+        the name of the category
     Methods
     -------
+    name(level: int = 1)
+        prende il nome della categoria definita dal livello #todo eng
 
-    message(textreplaces: dict = dict())
-        Get the message text based on the status and the language.
+    emoji(level: int = 1)
+        prende l'emoji della categoria definita dal livello #todo eng
 
-    callback(btns: BButtons = None, text_button: dict = dict(),
-                 text_data: dict = dict())
-        Generate the button array
-
-    notify()
-        Get the notify text based on the status and the language.
-
+    name_full(level:int = 1, first: bool = True)
+        prende il nome e l'emoj della categoria definita dal livello #todo eng
     """
-    name_category = None
+    category_name = str()
 
-    def __init__(self, lang: Union[str, None]):
+    def __init__(self, lang: Union[str, None] = None):
         """
         Initializes the translate Category
 
         Parameters
         ----------
-        lang: str, None, Optional
+        lang : str, None, Optional
             The lang of the message text
 
         """
         if lang is None:
             self.lang = config.telegram.LANGPREF
+            # todo new config
         else:
             self.lang = lang
         try:
@@ -93,21 +91,21 @@ class _Category:
             self.lang = config.telegram.LANGPREF
             with open('./data/language/lang' + self.lang + ".json",
                       encoding="utf8") as j:
-                self.json_lang = json.load(j)[self.name_category]
+                self.json_lang = json.load(j)[self.category_name]
 
     def name(self, level: int = 1) -> Union[str, bool]:
         """
-        prende il nome della categoria definita dal livello
+        prende il nome della categoria definita dal livello #todo eng
 
         Parameters
         ----------
-        level: int, Optional
+        level : int, Optional
             The level of the name
             If not specified is 1
 
         Returns
         -------
-        str,None
+        Union[str,bool]
             The name or False if not found
         """
         try:
@@ -117,17 +115,17 @@ class _Category:
 
     def emoji(self, level: int = 1) -> Union[str, bool]:
         """
-        prende il emoji della categoria definita dal livello
+        prende l'emoji della categoria definita dal livello #todo eng
 
         Parameters
         ----------
-        level: int, Optional
+        level : int, Optional
             The level of the emoji
             If not specified is 1
 
         Returns
         -------
-        str,None
+        Union[str,bool]
             The emoji or False if not found
         """
         try:
@@ -138,20 +136,20 @@ class _Category:
     def name_full(self, level: int = 1, first: bool = True
                   ) -> Union[str, bool]:
         """
-        prende il nome della categoria definita dal livello
+        prende il nome e l'emoj della categoria definita dal livello #todo eng
 
         Parameters
         ----------
-        level: int, Optional
+        level : int, Optional
             The level of the name
             If not specified is 1
-        first: bool, Optional
+        first : bool, Optional
             true if emoji first or false if name first
             If not specified is ture
 
         Returns
         -------
-        str,None
+        Union[str,bool]
             The name and emoji,
             or one of the two if the other is not present
             or False if not any found
@@ -160,9 +158,9 @@ class _Category:
         emoji = self.emoji(level)
         if name and emoji:
             if first:
-                return emoji + ' ' + name
+                return f"{emoji} {name}"
             else:
-                return name + ' ' + emoji
+                return f"{name} {emoji}"
         elif name:
             return name
         elif emoji:
@@ -188,10 +186,12 @@ def text_replace(text: str, textreplaces: dict = dict()
     str
         The string with replaced name
     """
-    textreplaces.update({"usernamebot": bot_username})
+    textreplaces.update({"bot_username": bot_username})
     try:
         text = text.format(**textreplaces)
     except (KeyError, ValueError):
+        # nel caso venga passata una stringa che format non riesce a gestire
+        # viene sostiuita tramite il metodo meno efficente
         for key, textreplace in textreplaces.items():
             text = text.replace("{" + key + "}", textreplace)
     return text
@@ -202,15 +202,15 @@ class CallMess:
 
     Attributes
     ----------
-    lang: str
+    lang : str
         The lang of the message text
-    status: str
+    status : str
         The status of the message
 
-    json_lang: dict
+    json_lang : dict
         The json that contiens all message in the language
 
-    json_callback: dict
+    json_callback : dict
         The json that contiens all callback function
 
     Methods
@@ -234,24 +234,26 @@ class CallMess:
 
         Parameters
         ----------
-        status: str
+        status : str
             The status of the message
-        lang: str, None, Optional
+        lang : str, None, Optional
             The lang of the message text
 
         """
         if lang is None:
             self.lang = config.telegram.LANGPREF
+            # todo new config
         else:
             self.lang = lang
         self.status = status
         try:
-            with open('./data/language/lang' + self.lang + ".json",
+            with open(f"./data/language/lang{self.lang}.json",
                       encoding="utf8") as j:
                 self.json_lang = json.load(j)
         except FileNotFoundError:
             self.lang = config.telegram.LANGPREF
-            with open('./data/language/lang' + self.lang + ".json",
+            # todo new config
+            with open(f"./data/language/lang{self.lang}.json",
                       encoding="utf8") as j:
                 self.json_lang = json.load(j)
         with open('./data/callback/callback.json', encoding="utf8") as j:
@@ -262,7 +264,7 @@ class CallMess:
 
         Parameters
         ----------
-        textreplaces: dict, Optional
+        textreplaces : dict, Optional
            The dictionary when key as replaced on a message
 
         Returns
@@ -274,9 +276,9 @@ class CallMess:
         text = self.json_lang["error_msg"]
         category_name = self.status.split('@')[0]
         for category in self.json_lang["category"]:
-            if category["category"] == category_name:
+            if category["category_name"] == category_name:
                 for status in category["status"]:
-                    if self.status == status["state"]:
+                    if self.status == status["status_name"]:
                         if 'text' in status:
                             text = status["text"]
                             break
@@ -285,13 +287,13 @@ class CallMess:
     def _callback_text(self, text_button: dict
                        ) -> Union[List[List[str]], bool]:
         """
-        Internal function for simplify the code
+        Internal function to simplify the code
         return the text of the button or None if not provided
 
         Parameters
         ----------
         text_button : dict
-            The dictionary when key as replaced on a text of the button
+            The dictionary containing the button text parts to be replaced
 
         Returns
         -------
@@ -302,9 +304,9 @@ class CallMess:
         buttons_text = []
         category_name = self.status.split('@')[0]
         for category in self.json_lang["category"]:
-            if category["category"] == category_name:
+            if category["category_name"] == category_name:
                 for status in category["status"]:
-                    if self.status == status["state"]:
+                    if self.status == status["status_name"]:
                         if status["buttons"] is None:
                             # if status don't have a button return btns
                             return True
@@ -322,33 +324,33 @@ class CallMess:
                           buttons_text: List[List[str]],
                           text_data: dict) -> Union[BButtons, None]:
         """
-        Internal functio for simplify the code
+        Internal function to simplify the code
         return the buttons translated
 
         Parameters
         ----------
 
-        btns: botogogra.buttons
+        btns : botogram.Buttons
             The botogram Buttons class
-        xbtns: int
+        xbtns : int
             The position to start buttons
-        buttons_text: List[List[str]]
+        buttons_text : List[List[str]]
             the array of array of button text
-        text_data: dict
+        text_data : dict
             The dictionary when key as replaced on a data
 
         Returns
         -------
-        botogram.Buttons, None
+        Union[botogram.Buttons, None]
             The buttons translated or None if status don't find
         """
         category_name = self.status.split('@')[0]
         x, y = 0, 0
 
         for category in self.json_callback["category"]:
-            if category["category"] == category_name:
-                for status in category["status"]:
-                    if self.status == status["state"]:
+            if category["category_name"] == category_name:
+                for status in category["status_name"]:
+                    if self.status == status["status_name"]:
                         if status["buttons"] is None:
                             return btns
                         for rows in status["buttons"]:
@@ -381,12 +383,12 @@ class CallMess:
 
         Parameters
         ----------
-        btns: botogram.Buttons, optional
+        btns : botogram.Buttons, optional
           The botogram Buttons class
           If not specified will be created locally
-        text_button: dict, Optional
+        text_button : dict, Optional
           The dictionary when key as replaced on a text of the button
-        text_data: dict, Optional
+        text_data : dict, Optional
           The dictionary when key as replaced on a data
 
         Returns
@@ -444,4 +446,4 @@ class Role(_Category):
     sub class of _Category
     This class as name_category is role
     """
-    name_category = "role"
+    category_name = "role"

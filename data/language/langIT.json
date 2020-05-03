@@ -5,11 +5,11 @@
    "error_button": "⚠️ Errore ⚠",
    "category":[
       {
-         "category":"home",
+         "category_name":"home",
          "status":[
             {
-               "state":"home",
-               "text":"Benvenuto su @{usernamebot}!",
+               "status_name":"home",
+               "text":"Benvenuto su @{bot_username}!",
                "buttons":
                [
                   [

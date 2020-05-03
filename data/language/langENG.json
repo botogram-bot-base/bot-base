@@ -9,7 +9,7 @@
          "status":[
             {
                "state":"home",
-               "text":"Welcome on @{usernamebot}!",
+               "text":"Welcome on @{bot_username}!",
                "buttons":
                [
                   [
