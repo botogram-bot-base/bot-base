@@ -1,4 +1,4 @@
-## Welcome to GitHub Pages
+## Welcome to GitHub Pages ![Bot Base Tests](https://github.com/Haloghen/bot-base/workflows/Bot%20Base%20Tests/badge.svg?branch=master)
 
 You can use the [editor on GitHub](https://github.com/DTRandom/bot-base/edit/master/README.md) to maintain and preview the content for your website in Markdown files.
 
