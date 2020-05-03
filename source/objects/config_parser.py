@@ -208,7 +208,6 @@ class _ConfigCategory:
             The dictionary or list which represents this category
         """
 
-
         try:
             return self.list
         except AttributeError:
