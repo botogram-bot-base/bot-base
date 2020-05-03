@@ -305,11 +305,22 @@ class Config:
         category_name : str
             The name of the new category
 
-        initial_keys : Union[dict, list, None], optional"""
+        initial_keys : Union[dict, list, None], optional
+            The keys to be added to the newly created category
+        """
+
         setattr(self, category_name, _ConfigCategory(category_name,
                                                      initial_keys))
 
     def as_dict(self) -> dict:
+        """This method allows to return the config as a dictionary
+
+        Returns
+        -------
+        dict:
+            The dictionary representing the configuration
+        """
+
         categories = [category for category in dir(self) if not callable(
             getattr(self, category)) and not category.startswith("__")
                       and type(getattr(self, category)) is _ConfigCategory]
@@ -321,11 +332,38 @@ class Config:
         return config_dict
 
     def as_json(self, indentation: int = 2) -> str:
+        """This method allows to get the configuration as a json-formatted
+        string
+
+        Parameters
+        ----------
+        indentation : int, optional
+            How many spaces to use when indenting the JSON, leave empty to
+            use 2
+
+        Returns
+        -------
+        str:
+            The JSON-formatted string representing the config
+        """
+
         config_dict = self.as_dict()
 
         return dumps(config_dict, indent=indentation, ensure_ascii=True)
 
     def save_to_json(self, path: str = "", indentation: int = 2) -> bool:
+        """This method allows to save the current configuration as a JSON to
+        the specified path or the defualt one with the specified indentation or
+        the default one
+
+        Parameters
+        ----------
+        path : str, optional
+            The path where to save the JSON, leave empty to use the default
+            one
+        indentation : int, optional
+            How to indent the JSON, leave empty to use the default one, 2
+        """
 
         json_parsed = self.as_json(indentation)
 
@@ -342,6 +380,14 @@ class Config:
         return True
 
     def load_from_json(self, path: str = "") -> bool:
+        """This method allows to load and parse into objects a JSON config
+        file
+
+        Parameters
+        ----------
+        path : str, optional
+            Where the JSON is located, leave empty to use the default one
+        """
 
         if not path:
             path = self.default_path
