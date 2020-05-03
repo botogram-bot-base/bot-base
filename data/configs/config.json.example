@@ -1,6 +1,7 @@
 {
   "telegram": {
-    "bot-token": ""
+    "bot-token": "",
+    "lang-pref": "eng"
   },
   "redis": {
     "ip": "localhost",
