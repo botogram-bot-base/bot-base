@@ -283,7 +283,22 @@ class CallMess:
         return text_replace(text, textreplaces)
 
     def _callback_text(self, text_button: dict
-                       ) -> Union[List[List[str]], None]:
+                       ) -> Union[List[List[str]], bool]:
+        """
+        Internal function for simplify the code
+        return the text of the button or None if not provided
+
+        Parameters
+        ----------
+        text_button : dict
+            The dictionary when key as replaced on a text of the button
+
+        Returns
+        -------
+        Union[List[List[str]], bool]
+            return the array of array of button text or True if buttons is null
+            or False if status don't find
+        """
         buttons_text = []
         category_name = self.status.split('@')[0]
         for category in self.json_lang["category"]:
@@ -292,7 +307,7 @@ class CallMess:
                     if self.status == status["state"]:
                         if status["buttons"] is None:
                             # if status don't have a button return btns
-                            return False
+                            return True
                         for row in status["buttons"]:
                             row_text = []
                             for buttons in row:
@@ -300,14 +315,35 @@ class CallMess:
                                     buttons["text"],
                                     text_button))
                             buttons_text.append(row_text)
-                        return buttons_text
+                            return buttons_text
+        return False
 
     def _calback_callback(self, btns: BButtons, xbtns: int,
                           buttons_text: List[List[str]],
-                          text_data: dict):
+                          text_data: dict) -> Union[BButtons, None]:
+        """
+        Internal functio for simplify the code
+        return the buttons translated
+
+        Parameters
+        ----------
+
+        btns: botogogra.buttons
+            The botogram Buttons class
+        xbtns: int
+            The position to start buttons
+        buttons_text: List[List[str]]
+            the array of array of button text
+        text_data: dict
+            The dictionary when key as replaced on a data
+
+        Returns
+        -------
+        botogram.Buttons, None
+            The buttons translated or None if status don't find
+        """
         category_name = self.status.split('@')[0]
         x, y = 0, 0
-        # get text of buttons
 
         for category in self.json_callback["category"]:
             if category["category"] == category_name:
@@ -355,7 +391,7 @@ class CallMess:
 
         Returns
         -------
-        botogra.Buttons
+        botogram.Buttons
             The buttons translated
         """
         if btns is None:
@@ -368,8 +404,12 @@ class CallMess:
         if xbtns != 0:
             xbtns += 1
         buttons_text = self._callback_text(text_button)
-        if buttons_text is None:
+        if buttons_text is True:
             return btns
+        elif buttons_text is False:
+            btns[xbtns].callback(self.json_lang["error_button"], 'home')
+            return btns
+
         btns_new = self._calback_callback(btns, xbtns,
                                           buttons_text,
                                           text_data)
