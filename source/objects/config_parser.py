@@ -123,6 +123,7 @@ class ConfigParser:
             print("[-] Redis Config not found")          # Alert if not found
 
         try:
-            self.telegram = _TelegramConfig(config_json["telegram"])  # Parse it
+            # Parse it
+            self.telegram = _TelegramConfig(config_json["telegram"])
         except KeyError:
             print("[-] Telegram Config not found")       # Alert if not found
