@@ -27,4 +27,5 @@ from invoke import task
 
 @task
 def lint(c):
+    c.run("flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics")
     c.run("flake8 --disable-noqa --max-complexity=10 --count --statistics")
