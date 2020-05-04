@@ -1,0 +1,60 @@
+{
+   "lang":"it",
+   "lang_display":"🇮🇹 Italiano",
+   "error_msg": "⚠️ Errore ⚠",
+   "error_button": "⚠️ Errore ⚠",
+   "category":[
+      {
+         "category_name":"home",
+         "status":[
+            {
+               "status_name":"home",
+               "text":"Benvenuto su @{bot_username}!",
+               "buttons":
+               [
+                  [
+                     {
+                        "text":"⚙️ Impostazioni"
+                     },
+                     {
+                        "text":"ℹ️ Info"
+                     }
+                  ]
+               ],
+               "notify":"🏠 Home"
+            }
+         ]
+      }
+   ],
+  "role": [
+  {
+    "name": "Ban",
+    "emoji": "\uD83D\uDEAB"
+  },
+  {
+    "name": "Utente normale",
+    "emoji": "\uD83D\uDC76\uD83C\uDFFB"
+  },
+  {
+    "name": "Libero",
+    "emoji": "\ud83d\udc66\ud83c\udffb"
+  },
+  {
+    "name": "Supporto",
+    "emoji": "\ud83d\udc72\ud83c\udffb"
+  },
+  {
+    "name": "Admin",
+    "emoji": "\ud83d\udc68\ud83c\udffb\u200d\u2708\ufe0f"
+  },
+  {
+    "name": "Super Admin",
+    "emoji": "\ud83e\udd34\ud83c\udffb"
+  },
+  {
+    "name": "Master",
+    "emoji": "\ud83d\udc51"
+  }
+]
+
+}
