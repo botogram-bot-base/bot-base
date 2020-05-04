@@ -1,0 +1,26 @@
+{
+   "category":[
+      {
+         "category":"home",
+         "status":[
+            {
+               "state":"home",
+               "buttons":[
+                  [
+                     {
+                        "type":"callback",
+                        "callback":"settings",
+                        "data":"main"
+                     },
+                     {
+                        "type":"callback",
+                        "callback":"info",
+                        "data":""
+                     }
+                  ]
+               ]
+            }
+         ]
+      }
+   ]
+}
