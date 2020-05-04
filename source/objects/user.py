@@ -101,8 +101,8 @@ class User:
                              "or telegram_id values")
             # Raise a ValueError (at least one is required)
 
-        if botogram_user and not telegram_id or \
-                botogram_user.id == telegram_id:
+        if (botogram_user and not telegram_id
+                or botogram_user.id == telegram_id):
             # If a botogram User is passed or both are passed and they match
             self.id = botogram_user.id  # Save its id as an attribute
 
@@ -170,8 +170,8 @@ class User:
             raise ValueError("Both a Botogram User and a Telegram"
                              " ID were passed, but they didn't match")
 
-    def _get_redis_value(self, key: str, type_of_return: type = str) ->\
-            Union[str, int, float, bool]:
+    def _get_redis_value(self, key: str, type_of_return: type = str
+                         ) -> Union[str, int, float, bool]:
         """Function which simplifies the redis hget function
 
         Parameters
@@ -211,8 +211,8 @@ class User:
                 # Alert if not possible
         return value
 
-    def _set_redis_value(self, key: str, value: Union[str, int, float]) \
-            -> bool:
+    def _set_redis_value(self, key: str, value: Union[str, int, float]
+                         ) -> bool:
         """Function which simplifies the redis hset function
         Parameters
         ----------
