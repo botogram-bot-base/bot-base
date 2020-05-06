@@ -24,4 +24,5 @@ SOFTWARE.
 
 from .setup import setup
 from .lint import lint
-__all__ = ['lint', 'setup']
+from .test import test
+__all__ = ['lint', 'setup', 'test']
