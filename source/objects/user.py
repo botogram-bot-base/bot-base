@@ -25,7 +25,7 @@ SOFTWARE.
 import redis
 # Required to work with redis
 
-from source.objects.config_parser import ConfigParser
+from source.objects.config_parser import Config
 # Configuration parser to get redis db info
 
 from botogram import User as bUser
@@ -37,7 +37,7 @@ from typing import Union
 from datetime import datetime as dt
 # Needed to save the last activity
 
-config = ConfigParser("data/configs/config.json")
+config = Config()
 # Load the config file and parse it
 
 r = redis.Redis(host=config.redis.IP, db=config.redis.DATABASE,
@@ -113,7 +113,7 @@ class User:
                 # present on redis
 
                 self.first_name = botogram_user.first_name
-                # Save its first name on tg as an attribute
+                # Save its name_first name on tg as an attribute
 
                 self.last_name = botogram_user.last_name
                 # Save its last name on tg as an attribute
@@ -126,7 +126,7 @@ class User:
                 self._state = "home"
 
                 self._set_redis_value("first_name", self.first_name)
-                # Set its first name on redis
+                # Set its name_first name on redis
 
                 self._set_redis_value("last_name", self.last_name)
                 # Set its last name on redis
