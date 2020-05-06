@@ -198,6 +198,8 @@ def text_replace(text: str, text_formatting: Union[dict, None] = None
     str
         The string with replaced text
     """
+    if not text_formatting:
+        text_formatting = dict()
 
     text_formatting.update({"bot_username": bot_username})
 
@@ -274,7 +276,7 @@ class CallMess:
         with open('./data/callback/callback.json', encoding="utf8") as j:
             self.json_callback = json.load(j)
 
-        self.notify = self._notify
+        self.notify = self.notify
 
     def message(self, text_formatting: Union[dict, None] = None) -> str:
         """Get the message text based on the status and the language.
@@ -462,7 +464,7 @@ class CallMess:
             btns[xbtns].callback(self.json_lang["error_button"], 'home')
             return btns
 
-    def _notify(self) -> Union[str, None]:
+    def notify(self) -> Union[str, None]:
         """
         Get the notify text based on the status and the language.
 
