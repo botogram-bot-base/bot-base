@@ -37,7 +37,7 @@ def env_to_json(config_path: Union[str, TextIO],
          Path of the config file
 
     dictionary: dict, Optional
-        #todo doc
+        pass dictionary to parse or None to get the env dictionary
     Returns
     -------
     bool
