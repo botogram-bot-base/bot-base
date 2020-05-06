@@ -105,11 +105,13 @@ class _ConfigCategory:
                 self.add_list(keys)
 
             elif type(keys) is dict:
+                keys_to_be_added = dict()
                 for key, value in keys.items():
                     if type(value) in [dict, list]:
                         setattr(self, key, _ConfigCategory(key, value))
                     else:
-                        setattr(self, key, value)
+                        keys_to_be_added[key] = value
+                self.add_keys(keys_to_be_added)
 
     def __str__(self) -> str:
         return self.name
@@ -146,9 +148,10 @@ class _ConfigCategory:
                                  "this category.")  # Raise a ValueError if so
         except AttributeError:  # else
             for key, value in keys.items():  # For every key: value pair passed
-                setattr(self, str(key), value)  # Set an attribute which
-                # has the key as the attribute name and his value as the
-                # corresponding attribute value
+                setattr(self, key.replace('-', '_'), value)  # Set an
+                # attribute which has the key with - replaced by _ as the
+                # attribute name and his value as the corresponding
+                # attribute value
 
     def add_list(self, list_to_add: List[Union[int, float, str, None, bool,
                                          List]]):
