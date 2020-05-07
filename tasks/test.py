@@ -22,7 +22,9 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 """
 
-from .setup import setup
-from .lint import lint
-from .test import test
-__all__ = ['lint', 'setup', 'test']
+from invoke import task, run
+
+
+@task
+def test(c):
+    run("py.test tests", pty=True)
