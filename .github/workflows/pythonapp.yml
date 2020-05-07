@@ -30,18 +30,18 @@ jobs:
 
     runs-on: ubuntu-latest
 
-      steps:
-        - uses: actions/checkout@v2
-        - name: Set up Python 3.8
-          uses: actions/setup-python@v1
-          with:
-            python-version: 3.8
-        - name: Install dependencies
-          run: |
-            python -m pip install --upgrade pip
-            pip install flake8 pytest
-            if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
-        - name: Lint with invoke lint
-          run: |
-            # stop the build if there are Python syntax errors or undefined names
-            invoke test
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up Python 3.8
+        uses: actions/setup-python@v1
+        with:
+        python-version: 3.8
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install flake8 pytest
+          if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+      - name: test with invoke test
+        run: |
+          # stop the build if test failed
+          invoke test
