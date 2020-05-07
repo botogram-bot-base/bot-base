@@ -5,7 +5,7 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-latest3
     steps:
     - uses: actions/checkout@master
     - name: Publish to Registry
@@ -14,3 +14,5 @@ jobs:
         name: ${{ secrets.DOCKER_IMAGE }}
         username: ${{ secrets.DOCKER_USERNAME }}
         password: ${{ secrets.DOCKER_PASSWORD }}
+        tag_semver: true
+        tags: "latest,${{ env.RELEASE_VERSION }}"
