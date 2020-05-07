@@ -67,8 +67,8 @@ def env_to_json(config_path: Union[str, TextIO],
     config_json = dict()
     for keys, value in dictionary.items():
         keys = keys.split("@")
-
         populate_dict(keys, config_json)
+
     # export dict to json file
     if type(config_path) is str:
         with open(config_path, 'w') as config_file:
